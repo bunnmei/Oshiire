@@ -111,8 +111,8 @@ class FileNoteRepository(
 
     override fun resolve(path: String): File {
         val direct = File(vaultDir, path)
-        // Obsidian の ![[name.jpg]] はファイル名だけのことがある
-        if (!direct.exists() && !path.contains('/')) {
+        // Obsidian の ![[name.jpg]] はファイル名だけのことがある（画面から呼ばれるので、それ以外はファイルを調べない）
+        if (!path.contains('/') && !direct.exists()) {
             val inAttachments = File(attachments, path)
             if (inAttachments.exists()) return inAttachments
         }
@@ -142,6 +142,8 @@ class FileNoteRepository(
         refresh()
         _imageChanges.emit(path)
     }
+
+    override suspend fun imageVersion(path: String): Long = withContext(io) { resolve(path).lastModified() }
 
     private fun noteFile(id: String) = File(vaultDir, "$id.md")
 

@@ -77,5 +77,6 @@ class SettingsViewModelTest {
         override suspend fun newImageFile() = "" to File("")
         override suspend fun importImage(input: InputStream) = ""
         override suspend fun notifyImageChanged(path: String) = Unit
+        override suspend fun imageVersion(path: String) = 0L
     }
 }

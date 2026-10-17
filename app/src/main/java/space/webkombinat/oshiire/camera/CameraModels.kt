@@ -93,6 +93,8 @@ data class CameraUiState(
     val settings: PhotoSettings = PhotoSettings(),
     val previewSize: Size? = null,
     val cameraOpen: Boolean = false,
+    /** プレビューの映像が届いている */
+    val previewStreaming: Boolean = false,
     val capturing: Boolean = false,
     val error: UiText? = null,
 )

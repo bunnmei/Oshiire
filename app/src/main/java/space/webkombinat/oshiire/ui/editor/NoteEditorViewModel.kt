@@ -67,7 +67,9 @@ class NoteEditorViewModel @AssistedInject constructor(
     init {
         viewModelScope.launch {
             val note = repository.load(noteId)
-            val blocks = ops.fromMarkdown(note?.content?.blocks.orEmpty())
+            val blocks = ops.fromMarkdown(note?.content?.blocks.orEmpty()).map {
+                if (it is EditorBlock.Image) it.copy(version = repository.imageVersion(it.path)) else it
+            }
             lastSaved = note?.content?.let(MarkdownCodec::encode)
             val last = blocks.last()
             caretBlockId = last.id
@@ -90,9 +92,10 @@ class NoteEditorViewModel @AssistedInject constructor(
         }
         viewModelScope.launch {
             repository.imageChanges.collect { path ->
+                val version = repository.imageVersion(path)
                 _state.update { s ->
                     s.copy(blocks = s.blocks.map {
-                        if (it is EditorBlock.Image && it.path == path) it.copy(version = it.version + 1) else it
+                        if (it is EditorBlock.Image && it.path == path) it.copy(version = maxOf(version, it.version + 1)) else it
                     })
                 }
             }
@@ -117,6 +120,7 @@ class NoteEditorViewModel @AssistedInject constructor(
 
     /** カーソル位置に画像を差し込み、続きを書けるよう直後の文章にフォーカスを移す */
     fun insertImage(path: String) {
+        // 撮ったばかりのファイルは表示キャッシュにないので version は 0 のままでよい
         _state.update { s ->
             val r = ops.insertImage(s.blocks, caretBlockId, caretOffset, path)
             caretBlockId = r.nextTextId

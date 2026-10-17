@@ -311,7 +311,7 @@ private fun ImageBlock(
         AsyncImage(
             model = ImageRequest.Builder(context)
                 .data(file)
-                .memoryCacheKey("${file.path}#${block.version}#${file.lastModified()}")
+                .memoryCacheKey("${file.path}#${block.version}")
                 .build(),
             contentDescription = block.alt.ifBlank { stringResource(R.string.editor_photo) },
             contentScale = ContentScale.FillWidth,

@@ -81,7 +81,8 @@ class AnnotateViewModel @AssistedInject constructor(
             val (bitmap, shapes) = withContext(Dispatchers.IO) {
                 val base = if (original.exists()) original else image
                 val shapes = runCatching { AnnotationDoc.fromJson(annotations.readText()).shapes }.getOrDefault(emptyList())
-                decode(base) to shapes
+                // 画面に出す分には 2048px で十分。原寸は保存するときだけ読む
+                decode(base, PREVIEW_SIDE) to shapes
             }
             _state.update { it.copy(bitmap = bitmap, shapes = shapes, error = bitmap == null) }
         }
@@ -178,13 +179,14 @@ class AnnotateViewModel @AssistedInject constructor(
 
     fun save() {
         val s = _state.value
-        val bitmap = s.bitmap ?: return
-        _state.update { it.copy(saving = true) }
+        if (s.bitmap == null) return
+        _state.update { it.copy(saving = true, selected = -1) }
         viewModelScope.launch {
             val ok = withContext(Dispatchers.IO) {
                 runCatching {
                     if (!original.exists()) image.copyTo(original)
-                    val out = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                    val full = decode(original, MAX_SIDE) ?: error("decode failed")
+                    val out = if (full.isMutable) full else full.copy(Bitmap.Config.ARGB_8888, true).also { full.recycle() }
                     AnnotationRenderer.draw(Canvas(out), s.shapes, out.width.toFloat(), out.height.toFloat())
                     val bytes = ByteArrayOutputStream().use { bos ->
                         out.compress(Bitmap.CompressFormat.JPEG, 92, bos)
@@ -219,14 +221,18 @@ class AnnotateViewModel @AssistedInject constructor(
 
     private companion object {
         const val MAX_SIDE = 4096
+        const val PREVIEW_SIDE = 2048
 
         /** EXIF の向きを反映して読み込む。大きすぎる画像は縮小する */
-        fun decode(file: File): Bitmap? = runCatching {
+        fun decode(file: File, maxSide: Int): Bitmap? = runCatching {
             val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
             BitmapFactory.decodeFile(file.path, bounds)
             var sample = 1
-            while (maxOf(bounds.outWidth, bounds.outHeight) / sample > MAX_SIDE) sample *= 2
-            val bmp = BitmapFactory.decodeFile(file.path, BitmapFactory.Options().apply { inSampleSize = sample })
+            while (maxOf(bounds.outWidth, bounds.outHeight) / sample > maxSide) sample *= 2
+            val bmp = BitmapFactory.decodeFile(file.path, BitmapFactory.Options().apply {
+                inSampleSize = sample
+                inMutable = true
+            })
                 ?: return@runCatching null
             val orientation = ExifInterface(file.path).getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
             val m = Matrix()

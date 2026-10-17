@@ -1,0 +1,4 @@
+# アプリのコードをインストール時に事前コンパイルさせ、初回の画面表示・画面遷移の引っかかりを減らす。
+# （Compose などのライブラリは自前のプロファイルを持っているので、ここではこのアプリの分だけ書く）
+HSPLspace/webkombinat/oshiire/**;->**(**)**
+Lspace/webkombinat/oshiire/**;

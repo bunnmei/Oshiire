@@ -19,7 +19,7 @@ sealed interface UiText {
     }
 
     /** [args] に UiText を含めた場合は先に解決してから埋め込む */
-    data class Res(@StringRes val id: Int, val args: List<Any> = emptyList()) : UiText {
+    data class Res(@param:StringRes val id: Int, val args: List<Any> = emptyList()) : UiText {
         override fun resolve(context: Context): String =
             if (args.isEmpty()) context.getString(id)
             else context.getString(id, *args.map { if (it is UiText) it.resolve(context) else it }.toTypedArray())

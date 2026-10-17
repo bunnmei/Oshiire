@@ -49,6 +49,14 @@ android {
                 packageScope = setOf("androidx.**", "kotlin.**", "kotlinx.**")
             }
         }
+        // 動きの速さを確かめる用。release と同じ最適化をかけ、デバッグ鍵で署名するので手元でそのまま入れられる。
+        // debug ビルドは Compose が最適化されず、画面の切り替えが実際よりずっと遅く見える
+        create("staging") {
+            initWith(getByName("release"))
+            signingConfig = signingConfigs.getByName("debug")
+            applicationIdSuffix = ".staging"
+            matchingFallbacks += "release"
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

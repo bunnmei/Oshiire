@@ -2,6 +2,8 @@ package space.webkombinat.oshiire.ui.camera
 
 import android.hardware.camera2.CameraMetadata
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTransformGestures
@@ -55,6 +57,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -105,7 +108,11 @@ fun FullscreenCamera(
         if (window.timerSec > 0) countdown = window.timerSec else vm.shoot(onCaptured)
     }
 
-    Column(Modifier.fillMaxSize().background(Color.Black).safeDrawingPadding()) {
+    // 出てくるときだけフェードさせる（消えるときは即座に消し、窓の TextureView とプレビューを取り合わない）
+    val appear = remember { Animatable(0f) }
+    LaunchedEffect(Unit) { appear.animateTo(1f, tween(160)) }
+
+    Column(Modifier.fillMaxSize().graphicsLayer { alpha = appear.value }.background(Color.Black).safeDrawingPadding()) {
         // 上部ツールバー
         Row(
             Modifier.fillMaxWidth().padding(horizontal = 4.dp),

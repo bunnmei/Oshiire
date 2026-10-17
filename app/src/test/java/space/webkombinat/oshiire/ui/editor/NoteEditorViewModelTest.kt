@@ -179,5 +179,6 @@ class NoteEditorViewModelTest {
         override suspend fun newImageFile() = "attachments/x.jpg" to File("x.jpg")
         override suspend fun importImage(input: InputStream) = "attachments/imported.jpg"
         override suspend fun notifyImageChanged(path: String) = changes.emit(path)
+        override suspend fun imageVersion(path: String) = 0L
     }
 }

@@ -49,6 +49,16 @@ app/src/main/java/space/webkombinat/oshiire/
   ui/          list / editor / camera / annotate / settings / theme
 ```
 
+## 動作の速さを確かめるとき
+
+debug ビルドは Compose が最適化されないため、画面の切り替えが実際よりかなり遅く見えます。速さは Android Studio の Build Variants で **staging**（release と同じ最適化・デバッグ鍵で署名・`.staging` の別アプリ）を選んで確かめてください。
+
+```sh
+./gradlew installStaging
+```
+
+`app/src/main/baseline-prof.txt` でアプリのコードを事前コンパイルさせ、初回の画面遷移の引っかかりを減らしています。
+
 ## テスト
 
 ```sh

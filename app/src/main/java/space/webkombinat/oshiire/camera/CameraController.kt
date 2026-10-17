@@ -3,6 +3,7 @@ package space.webkombinat.oshiire.camera
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.ImageFormat
+import android.graphics.SurfaceTexture
 import android.hardware.camera2.CameraCaptureSession
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
@@ -36,9 +37,7 @@ import space.webkombinat.oshiire.util.UiText
 import space.webkombinat.oshiire.util.raw
 import space.webkombinat.oshiire.util.text
 import java.io.File
-import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executor
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -46,18 +45,23 @@ import javax.inject.Singleton
  * Camera2 による写真撮影。すべての状態は専用の "Camera" スレッド上でのみ変更する。
  * UI からの呼び出しはスレッドセーフ（内部でポストする）。
  *
- * カメラはプレビュー先の Surface があるときだけ開く。フローティング窓を最小化したり
- * アプリが裏に回ったりして Surface がなくなると自動で閉じる。
+ * プレビューの映像は [previewTexture]（アプリで 1 つだけの SurfaceTexture）に流す。画面側の TextureView は
+ * これを貼って表示するだけなので、窓 ⇔ 全画面の切り替えではカメラを開き直さない。
+ * 表示している画面がなくなると、少し待ってからカメラスレッドで閉じる（UI スレッドは待たせない）。
  */
 @Singleton
 class CameraController @Inject constructor(
-    @ApplicationContext private val context: Context,
+    @param:ApplicationContext private val context: Context,
     private val manager: CameraManager,
 ) {
     private val thread = HandlerThread("Camera").apply { start() }
     private val handler = Handler(thread.looper)
     private val executor = Executor { handler.post(it) }
     private val sound by lazy { MediaActionSound().apply { load(MediaActionSound.SHUTTER_CLICK) } }
+
+    /** プレビュー先。作成時は GL コンテキストに未接続なので、どの TextureView にも貼れる */
+    val previewTexture: SurfaceTexture = SurfaceTexture(false)
+    private val previewSurface = Surface(previewTexture)
 
     private val _state = MutableStateFlow(CameraUiState())
     val state: StateFlow<CameraUiState> = _state.asStateFlow()
@@ -80,8 +84,11 @@ class CameraController @Inject constructor(
 
     private var settings = PhotoSettings()
     private var previewSize: Size? = null
-    private var previewSurface: Surface? = null
-    private var previewSurfaceSize: Size? = null
+    /** プレビューを表示している画面の数 */
+    private var attachedViews = 0
+    private var previewWanted = false
+    /** 今のセッションで最初のフレームが届いたか（届くまで画面にローディングを出す） */
+    private var streaming = false
     private var reader: ImageReader? = null
     private var pending: PendingCapture? = null
     private var error: UiText? = null
@@ -133,36 +140,33 @@ class CameraController @Inject constructor(
         lenses.firstOrNull { it.facing != cur.facing }?.let { selectLensInternal(it) }
     }
 
-    /**
-     * プレビュー Surface を設定。null を渡した場合はカメラがその Surface を使わなくなるまでブロックする
-     * （SurfaceHolder.Callback.surfaceDestroyed から呼ぶため）。
-     */
-    fun setPreviewSurface(surface: Surface?, size: Size?) {
-        if (surface != null) {
-            post {
-                previewSurface = surface
-                previewSurfaceSize = size
-                ensureCamera()
-            }
-            return
-        }
-        val latch = CountDownLatch(1)
-        post {
-            previewSurface = null
-            previewSurfaceSize = null
-            val s = session
-            if (s != null) {
-                runCatching { s.stopRepeating(); s.abortCaptures() }
-                closeActions.getOrPut(s) { mutableListOf() } += { latch.countDown() }
-                runCatching { s.close() }
-                session = null
-                sessionSurfaces = emptyList()
-            } else {
-                latch.countDown()
-            }
+    /** プレビューを表示する画面が現れた */
+    fun attachPreview() = post {
+        attachedViews++
+        handler.removeCallbacks(closeIfUnused)
+        if (!previewWanted) {
+            previewWanted = true
             ensureCamera()
         }
-        latch.await(1500, TimeUnit.MILLISECONDS)
+    }
+
+    /**
+     * プレビューを表示する画面が消えた。窓 ⇔ 全画面の切り替えのようにすぐ次の画面が来ることがあるので、
+     * 少し待ってから閉じる。
+     */
+    fun detachPreview() = post {
+        attachedViews = (attachedViews - 1).coerceAtLeast(0)
+        if (attachedViews == 0) {
+            handler.removeCallbacks(closeIfUnused)
+            handler.postDelayed(closeIfUnused, CLOSE_DELAY_MS)
+        }
+    }
+
+    private val closeIfUnused = Runnable {
+        if (attachedViews == 0 && previewWanted) {
+            previewWanted = false
+            runCatching { ensureCamera() }.onFailure { Log.w(TAG, "close failed", it) }
+        }
     }
 
     fun setZoom(ratio: Float) = updateSettings { s -> s.copy(zoomRatio = caps?.zoomRange?.clamp(ratio) ?: ratio) }
@@ -243,7 +247,9 @@ class CameraController @Inject constructor(
             zoomRatio = parsed.zoomRange.clamp(1f),
             flash = if (parsed.flashAvailable) settings.flash else FlashMode.OFF,
         )
-        previewSize = CapabilitiesParser.choosePreviewSize(parsed.previewSizes, parsed.jpegSize)
+        previewSize = CapabilitiesParser.choosePreviewSize(parsed.previewSizes, parsed.jpegSize).also {
+            previewTexture.setDefaultBufferSize(it.width, it.height)
+        }
         reader?.let { old -> releaseAfterSessionClosed { old.close() } }
         reader = ImageReader.newInstance(parsed.jpegSize.width, parsed.jpegSize.height, ImageFormat.JPEG, 2).apply {
             setOnImageAvailableListener({ r -> onJpeg(r) }, handler)
@@ -262,7 +268,7 @@ class CameraController @Inject constructor(
     }
 
     private fun ensureCamera() {
-        val needed = hasPermission && lens != null && previewSurface != null
+        val needed = hasPermission && lens != null && previewWanted
         when {
             needed && device == null && !opening -> openCamera()
             !needed && (device != null || opening) -> closeCamera()
@@ -315,6 +321,7 @@ class CameraController @Inject constructor(
     private fun closeCamera() {
         openToken++
         opening = false
+        streaming = false
         finishCapture(false)
         session?.let { runCatching { it.close() } }
         session = null
@@ -327,14 +334,14 @@ class CameraController @Inject constructor(
 
     private fun createSession() {
         val d = device ?: return
-        val p = previewSurface
         val r = reader
         val gen = ++sessionGen
         session?.let { runCatching { it.close() } }
         session = null
         sessionSurfaces = emptyList()
-        if (p == null || !p.isValid || previewSurfaceSize != previewSize || r == null) return
-        val surfaces = listOf(p, r.surface)
+        streaming = false
+        if (r == null) return
+        val surfaces = listOf(previewSurface, r.surface)
         val physicalId = lens?.physicalId?.takeIf { usePhysicalStream }
         val outputs = surfaces.map { s ->
             OutputConfiguration(s).also { oc -> physicalId?.let { oc.setPhysicalCameraId(it) } }
@@ -619,6 +626,10 @@ class CameraController @Inject constructor(
 
     private val captureCallback = object : CameraCaptureSession.CaptureCallback() {
         override fun onCaptureCompleted(s: CameraCaptureSession, request: CaptureRequest, result: TotalCaptureResult) {
+            if (!streaming && s === session) {
+                streaming = true
+                publish()
+            }
             val p = pending ?: return
             val elapsed = SystemClock.elapsedRealtime() - p.stageStartedAt
             when (p.stage) {
@@ -656,6 +667,7 @@ class CameraController @Inject constructor(
             settings = settings,
             previewSize = previewSize,
             cameraOpen = device != null,
+            previewStreaming = streaming && session != null,
             capturing = pending != null,
             error = error,
         )
@@ -666,5 +678,6 @@ class CameraController @Inject constructor(
         const val AF_TIMEOUT_MS = 1500L
         const val AE_TIMEOUT_MS = 1500L
         const val CAPTURE_TIMEOUT_MS = 8000L
+        const val CLOSE_DELAY_MS = 600L
     }
 }

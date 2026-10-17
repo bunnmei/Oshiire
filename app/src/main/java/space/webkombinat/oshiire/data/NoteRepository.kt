@@ -43,4 +43,7 @@ interface NoteRepository {
     suspend fun importImage(input: InputStream): String
 
     suspend fun notifyImageChanged(path: String)
+
+    /** 画像ファイルの更新時刻（表示のキャッシュを分けるため）。ファイルを調べるので IO で呼ぶ */
+    suspend fun imageVersion(path: String): Long
 }
