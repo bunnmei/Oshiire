@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>使い方 — oshiire</title>
+  <meta name="description" content="oshiire の使い方。メモの作り方、フローティングカメラ、写真への書き込み、保存形式と Obsidian での開き方、設定、困ったとき。">
+  <link rel="icon" href="../img/icon.webp">
+  <link rel="alternate" hreflang="en" href="../en/guide.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="./"><img src="../img/icon.webp" alt="">oshiire</a>
+      <nav class="nav">
+        <a href="./">ホーム</a>
+        <a href="guide.html" aria-current="page">使い方</a>
+        <a href="privacy.html">プライバシー</a>
+      </nav>
+      <a class="lang-switch" href="../en/guide.html" hreflang="en" lang="en" data-set-lang="en"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
+</svg>English</a>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="page-title">使い方</h1>
+    <p class="page-meta">oshiire ／ Android 9 以降</p>
+
+    <div class="summary">
+      <p><strong>「新しいメモ」を押して、書いて、浮かんでいるカメラのシャッターを押すだけ。</strong>写真はカーソルの位置に入り、すぐ続きを書けます。保存は自動です。</p>
+    </div>
+
+    <nav class="toc" aria-label="目次">
+      <div class="toc__title">このページの内容</div>
+      <ol>
+        <li><a href="#screens">画面の構成</a></li>
+        <li><a href="#list">メモ一覧</a></li>
+        <li><a href="#editor">メモを書く</a></li>
+        <li><a href="#camera">フローティングカメラ</a></li>
+        <li><a href="#fullscreen">全画面カメラ</a></li>
+        <li><a href="#annotate">写真に書き込む</a></li>
+        <li><a href="#storage">保存のしくみと Obsidian</a></li>
+        <li><a href="#settings">設定</a></li>
+        <li><a href="#trouble">困ったときは</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="screens">1. 画面の構成</h2>
+    <p>画面の下にあるボトムナビゲーションで切り替えます。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>場所</th><th>画面</th></tr></thead>
+        <tbody>
+          <tr><td>左「メモ」</td><td>メモ一覧 → タップでメモの編集画面（さらに写真の書き込み画面）</td></tr>
+          <tr><td>右「設定」</td><td>テーマ（システム／ライト／ダーク）、保存場所、バージョンなど</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>編集画面ではボトムナビゲーションを隠して、書く場所を広く取ります。左上の「←」か、端末の戻る操作で一覧に戻ります。</p>
+
+    <h2 id="list">2. メモ一覧</h2>
+    <ul>
+      <li>メモは<strong>更新した日時の新しい順</strong>に並びます。</li>
+      <li>左に<strong>サムネイル</strong>（メモの中の最初の写真）、右に<strong>タイトル・冒頭の文・日時</strong>が出ます。写真がないメモは、メモごとに色の違うアイコンになります。</li>
+      <li>タップするとメモを開いて編集できます。</li>
+      <li>右下の「<strong>新しいメモ</strong>」で新しく書き始めます。</li>
+      <li>メモを<strong>左にスワイプ</strong>すると削除します。すぐ下に出る「元に戻す」で取り消せます。</li>
+    </ul>
+    <p>タイトルを付けなかったメモは、本文の 1 行目がタイトルとして表示されます。</p>
+
+    <h2 id="editor">3. メモを書く</h2>
+    <ol class="steps">
+      <li><strong>タイトルを入れる</strong>新しいメモでは、最初にタイトル欄にカーソルがあります。キーボードの「次へ」で本文に移ります。タイトルは空でもかまいません。</li>
+      <li><strong>本文を書く</strong>普通のメモと同じように書けます。Markdown の記法（<code>## 見出し</code>、<code>- リスト</code> など）もそのまま書けます。</li>
+      <li><strong>シャッターを押す</strong>浮かんでいるカメラのシャッターを押すと、<strong>カーソルの位置</strong>に写真が入ります。文章の途中なら、そこで文章が前後に分かれます。</li>
+      <li><strong>続きを書く</strong>写真のすぐ下にカーソルが移るので、そのまま続きを書けます。何枚続けて撮っても、撮った順に並びます。</li>
+    </ol>
+
+    <h3>写真のメニュー</h3>
+    <p>メモの中の写真をタップすると、次のメニューが出ます。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>メニュー</th><th>できること</th></tr></thead>
+        <tbody>
+          <tr><td>写真に書き込む</td><td>丸・矢印・文字などを書き込む画面を開く（<a href="#annotate">6 章</a>）</td></tr>
+          <tr><td>上へ移動／下へ移動</td><td>写真を前後の文章・写真と入れ替える</td></tr>
+          <tr><td>写真を外す</td><td>メモから写真を外す（写真のファイルは attachments フォルダに残ります）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>上のバーのボタン</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ボタン</th><th>できること</th></tr></thead>
+        <tbody>
+          <tr><td>カメラ</td><td>フローティングカメラを表示する／隠す</td></tr>
+          <tr><td>ギャラリー</td><td>端末に保存済みの写真をカーソル位置に入れる</td></tr>
+          <tr><td>︙ → メモを削除</td><td>このメモを削除する（保存フォルダの <code>.trash</code> に移ります）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="callout__title">保存ボタンはありません</span>
+      <p>入力が 0.5 秒止まるたびに自動で保存します。アプリを閉じたとき、画面を戻ったときもすぐ保存します。何も書かずに閉じたメモは残りません。</p>
+    </div>
+
+    <h2 id="camera">4. フローティングカメラ</h2>
+    <p>編集画面の右下に浮かんでいる小さなカメラ窓です。メモを書きながら、いつでも撮れます。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>操作</th><th>動き</th></tr></thead>
+        <tbody>
+          <tr><td>窓をドラッグ</td><td>好きな場所へ移動</td></tr>
+          <tr><td>2 本指でピンチ</td><td>ズーム</td></tr>
+          <tr><td>右下の角をドラッグ</td><td>窓の大きさを変える</td></tr>
+          <tr><td>プレビューをタップ</td><td>そこにピントと明るさを合わせる</td></tr>
+          <tr><td>プレビューを長押し</td><td>ピントと明るさを固定（AE/AF ロック）。ダブルタップで解除</td></tr>
+          <tr><td>下の白い丸</td><td>撮影</td></tr>
+          <tr><td>左上「－」</td><td>最小化（丸いカメラボタンになります。タップで元に戻る、ドラッグで移動）</td></tr>
+          <tr><td>上中央の切替</td><td>背面 ⇔ 前面カメラ</td></tr>
+          <tr><td>右上の拡大</td><td>全画面カメラにする</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>窓の位置・大きさは、別のメモを開いても保たれます。キーボードを出すと、窓はキーボードの上に収まるように動きます。</p>
+
+    <h2 id="fullscreen">5. 全画面カメラ</h2>
+    <p>じっくり撮りたいときは全画面にします。撮った写真は窓のときと同じく、メモのカーソル位置に入ります。左下のサムネイルか左上の「×」、戻る操作でメモに戻ります。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>機能</th><th>説明</th></tr></thead>
+        <tbody>
+          <tr><td>フラッシュ</td><td>押すたびに オフ → オート → オン → ライト（点灯したまま）</td></tr>
+          <tr><td>タイマー</td><td>オフ → 3 秒 → 10 秒</td></tr>
+          <tr><td>グリッド</td><td>構図の目安になる 3×3 の線を表示</td></tr>
+          <tr><td>HDR</td><td>明暗差の大きい場面をきれいに撮る（対応機種のみ）</td></tr>
+          <tr><td>露出補正</td><td>スライダーで明るさを調整</td></tr>
+          <tr><td>ズーム</td><td>倍率ボタン（0.5x・1x・2x など、機種による）またはピンチ</td></tr>
+          <tr><td>レンズ</td><td>下のボタンで超広角・望遠などのレンズを直接選ぶ（「自動」はズームに合わせて切り替わるレンズ）</td></tr>
+          <tr><td>詳細設定</td><td>マニュアルフォーカス、マニュアル露出（ISO・シャッタースピード）、ホワイトバランス、シーン（夜景・ポートレートなど）</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>出てくる項目は、その端末のカメラが対応しているものだけです。機種によって項目が違います。</p>
+
+    <h2 id="annotate">6. 写真に書き込む</h2>
+    <p>メモの中の写真をタップ →「写真に書き込む」で開きます。</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>道具</th><th>使い方</th></tr></thead>
+        <tbody>
+          <tr><td>丸</td><td>囲みたい範囲を斜めにドラッグ</td></tr>
+          <tr><td>矢印</td><td>根元から先端へドラッグ</td></tr>
+          <tr><td>四角</td><td>斜めにドラッグ</td></tr>
+          <tr><td>ペン</td><td>指でなぞって手書き</td></tr>
+          <tr><td>文字</td><td>入れたい場所をタップして文字を入力</td></tr>
+          <tr><td>選択・移動</td><td>描いたものをタップで選び、ドラッグで移動。ゴミ箱で削除、色を押すと色を変更</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li>色は 6 色（赤・黄・緑・青・白・黒）、太さは「細い／普通／太い」から選べます。文字の大きさも太さに合わせて変わります。</li>
+      <li>上のバーで「元に戻す」「やり直す」ができます。</li>
+      <li>右上の「✓」で保存します。保存せずに戻ると、変更を破棄するか確認します。</li>
+      <li>書き込んだ後でも、もう一度開けば<strong>描いたものを動かしたり消したり</strong>できます（元の写真は残してあります）。</li>
+    </ul>
+
+    <h2 id="storage">7. 保存のしくみと Obsidian</h2>
+    <p>メモはデータベースではなく、ただのファイルとして保存します。フォルダの場所は「設定」→「保存場所」に出ています。</p>
+<pre><code>Android/data/space.webkombinat.oshiire/files/vault/
+  2026-10-17_124831.md          ← メモ 1 つが 1 ファイル
+  attachments/
+    IMG_20261017_124905.jpg     ← 写真（書き込みがあれば書き込み入り）
+    IMG_20261017_124905.orig.jpg       ← 書き込み前の元の写真
+    IMG_20261017_124905.jpg.annot.json ← 書き込みの内容（描き直し用）
+  .trash/                       ← 削除したメモ</code></pre>
+    <p>メモの中身は次のような Markdown です。</p>
+<pre><code># 朝のカフェ
+
+今日は駅前のカフェへ。
+
+![](attachments/IMG_20261017_124905.jpg)
+
+ラテアートがきれい。</code></pre>
+    <h3>Obsidian で開くには</h3>
+    <ol class="steps">
+      <li><strong>vault フォルダを PC にコピーする</strong>スマホを USB で PC につなぎ、「ファイル転送」を選んで、上のフォルダを PC にコピーします。</li>
+      <li><strong>Obsidian で「フォルダを保管庫として開く」</strong>コピーした <code>vault</code> フォルダを選ぶと、写真付きでそのまま表示されます。</li>
+    </ol>
+    <p>PC で書き足した .md をフォルダに戻すと、アプリの一覧にも出ます（<code>![[ファイル名.jpg]]</code> 形式の画像も読み込めます）。</p>
+    <div class="callout callout--warn">
+      <span class="callout__title">アプリを削除するとメモも消えます</span>
+      <p>保存フォルダはアプリ専用の場所なので、アプリをアンインストールすると中身も消えます。大事なメモは PC にコピーしておいてください。</p>
+    </div>
+
+    <h2 id="settings">8. 設定</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>テーマ</td><td>システムに合わせる／ライト／ダーク の 3 つから選ぶ。すぐに切り替わります</td></tr>
+          <tr><td>保存場所</td><td>メモのフォルダ（Obsidian の vault）の場所</td></tr>
+          <tr><td>このアプリについて</td><td>使い方（このページ）、ソースコード、バージョン</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="trouble">9. 困ったときは</h2>
+    <details>
+      <summary>カメラが映らない・「カメラへのアクセスが必要です」と出る</summary>
+      <p>窓の「許可する」を押してください。一度拒否した場合は、端末の「設定」→「アプリ」→「oshiire」→「権限」→「カメラ」から許可できます。</p>
+    </details>
+    <details>
+      <summary>「カメラが切断されました」と出る</summary>
+      <p>ほかのアプリがカメラを使っている可能性があります。カメラを使うほかのアプリを閉じてから、窓を最小化して戻すか、メモを開き直してください。</p>
+    </details>
+    <details>
+      <summary>カメラ窓が邪魔で文字が見えない</summary>
+      <p>窓をドラッグして移動するか、「－」で最小化してください。上のバーのカメラボタンで完全に隠すこともできます。メモの最後には余白があるので、下までスクロールすれば窓に隠れずに書けます。</p>
+    </details>
+    <details>
+      <summary>写真が横向き・逆さまになる</summary>
+      <p>撮影したときのスマホの向きで写真の向きを決めています。スマホを机に平らに置いたまま撮ると、向きがずれることがあります。少し立てて撮ってください。</p>
+    </details>
+    <details>
+      <summary>削除したメモを戻したい</summary>
+      <p>削除した直後なら、一覧の下に出る「元に戻す」で戻せます。それを過ぎても、保存フォルダの <code>.trash</code> に .md ファイルが残っています。vault フォルダに戻すと一覧に出ます。</p>
+    </details>
+    <details>
+      <summary>機種変更するときは</summary>
+      <p>vault フォルダを PC 経由で新しい端末の同じ場所にコピーしてください。</p>
+    </details>
+
+    <p style="margin-top:24px">解決しないときは <a href="https://github.com/bunnmei/oshiire/issues">GitHub の Issues</a> で教えてください。</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span class="copyright">© 2026 bunnmei</span>
+      <a href="guide.html">使い方</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="https://github.com/bunnmei/oshiire">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>

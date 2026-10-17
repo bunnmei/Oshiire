@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guide — oshiire</title>
+  <meta name="description" content="How to use oshiire: writing notes, the floating camera, drawing on photos, the file format and Obsidian, settings and troubleshooting.">
+  <link rel="icon" href="../img/icon.webp">
+  <link rel="alternate" hreflang="ja" href="../ja/guide.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="../assets/site.css">
+  <script src="../assets/site.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="./"><img src="../img/icon.webp" alt="">oshiire</a>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="guide.html" aria-current="page">Guide</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+      <a class="lang-switch" href="../ja/guide.html" hreflang="ja" lang="ja" data-set-lang="ja"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2s.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.08 16zm2.95-8H5.08a7.99 7.99 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2s.07-1.35.16-2h4.68c.09.65.16 1.32.16 2s-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2s-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>
+</svg>日本語</a>
+    </div>
+  </header>
+
+  <main>
+    <h1 class="page-title">Guide</h1>
+    <p class="page-meta">oshiire / Android 9 or later</p>
+
+    <div class="summary">
+      <p><strong>Tap "New note", write, and press the shutter on the floating camera.</strong> The photo lands at the cursor and you can keep writing. Saving is automatic.</p>
+    </div>
+
+    <nav class="toc" aria-label="Contents">
+      <div class="toc__title">On this page</div>
+      <ol>
+        <li><a href="#screens">Screens</a></li>
+        <li><a href="#list">Note list</a></li>
+        <li><a href="#editor">Writing a note</a></li>
+        <li><a href="#camera">Floating camera</a></li>
+        <li><a href="#fullscreen">Full-screen camera</a></li>
+        <li><a href="#annotate">Drawing on photos</a></li>
+        <li><a href="#storage">How notes are stored, and Obsidian</a></li>
+        <li><a href="#settings">Settings</a></li>
+        <li><a href="#trouble">Troubleshooting</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="screens">1. Screens</h2>
+    <p>Switch screens with the bottom navigation bar.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Where</th><th>Screen</th></tr></thead>
+        <tbody>
+          <tr><td>Left: "Notes"</td><td>Note list → tap to open the editor (and from there, the photo drawing screen)</td></tr>
+          <tr><td>Right: "Settings"</td><td>Theme (system / light / dark), storage location, version</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The bottom bar is hidden in the editor to give you more room. Use "←" at the top left, or the system back gesture, to return to the list.</p>
+
+    <h2 id="list">2. Note list</h2>
+    <ul>
+      <li>Notes are sorted by <strong>last update, newest first</strong>.</li>
+      <li>Each row shows a <strong>thumbnail</strong> (the first photo in the note) on the left, and the <strong>title, the first lines and the date</strong> on the right. Notes without photos get a coloured icon.</li>
+      <li>Tap a note to open and edit it.</li>
+      <li>Tap "<strong>New note</strong>" at the bottom right to start a new one.</li>
+      <li><strong>Swipe a note to the left</strong> to delete it. Tap "Undo" in the bar that appears to bring it back.</li>
+    </ul>
+    <p>Notes without a title show their first line as the title.</p>
+
+    <h2 id="editor">3. Writing a note</h2>
+    <ol class="steps">
+      <li><strong>Enter a title</strong>A new note starts in the title field. Press "Next" on the keyboard to move to the body. The title is optional.</li>
+      <li><strong>Write</strong>Write as in any notepad. Markdown (<code>## heading</code>, <code>- list</code>, …) works as-is.</li>
+      <li><strong>Press the shutter</strong>Press the shutter on the floating camera and the photo is inserted <strong>at the cursor</strong>. In the middle of a paragraph, the text splits around the photo.</li>
+      <li><strong>Keep writing</strong>The cursor moves just below the photo, so you can carry on. Take as many photos as you like; they stay in the order you took them.</li>
+    </ol>
+
+    <h3>Photo menu</h3>
+    <p>Tap a photo in the note to open this menu.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Draw on photo</td><td>Opens the drawing screen for circles, arrows, text and more (<a href="#annotate">section 6</a>)</td></tr>
+          <tr><td>Move up / Move down</td><td>Swaps the photo with the text or photo next to it</td></tr>
+          <tr><td>Remove photo</td><td>Removes the photo from the note (the file stays in the attachments folder)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Top bar buttons</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Button</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Camera</td><td>Shows or hides the floating camera</td></tr>
+          <tr><td>Gallery</td><td>Inserts a photo already on the device at the cursor</td></tr>
+          <tr><td>⋮ → Delete note</td><td>Deletes this note (it is moved to the <code>.trash</code> folder)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <span class="callout__title">There is no save button</span>
+      <p>The note is saved whenever you pause typing for half a second, and immediately when you leave the screen or close the app. A note you leave empty is not kept.</p>
+    </div>
+
+    <h2 id="camera">4. Floating camera</h2>
+    <p>The small camera window at the bottom right of the editor. Take photos any time while you write.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Gesture</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Drag the window</td><td>Move it anywhere</td></tr>
+          <tr><td>Pinch with two fingers</td><td>Zoom</td></tr>
+          <tr><td>Drag the bottom-right corner</td><td>Resize the window</td></tr>
+          <tr><td>Tap the preview</td><td>Focus and meter on that spot</td></tr>
+          <tr><td>Long-press the preview</td><td>Lock focus and exposure (AE/AF lock). Double-tap to unlock</td></tr>
+          <tr><td>White circle at the bottom</td><td>Take a photo</td></tr>
+          <tr><td>"–" at the top left</td><td>Minimize to a round camera button (tap to restore, drag to move)</td></tr>
+          <tr><td>Switch at the top centre</td><td>Back ⇔ front camera</td></tr>
+          <tr><td>Expand at the top right</td><td>Open the full-screen camera</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The window keeps its position and size when you open another note. When the keyboard appears, the window moves to stay above it.</p>
+
+    <h2 id="fullscreen">5. Full-screen camera</h2>
+    <p>Go full screen when you want to take your time. Photos still go to the cursor in your note. Tap the thumbnail at the bottom left, "×" at the top left, or go back to return to the note.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Feature</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Flash</td><td>Cycles off → auto → on → torch (always on)</td></tr>
+          <tr><td>Timer</td><td>Off → 3 s → 10 s</td></tr>
+          <tr><td>Grid</td><td>Shows 3×3 composition lines</td></tr>
+          <tr><td>HDR</td><td>Better results in high-contrast scenes (supported devices only)</td></tr>
+          <tr><td>Exposure compensation</td><td>Adjust brightness with a slider</td></tr>
+          <tr><td>Zoom</td><td>Zoom buttons (0.5x, 1x, 2x … depending on the device) or pinch</td></tr>
+          <tr><td>Lens</td><td>Pick ultra-wide, telephoto and other lenses directly ("auto" switches lenses with zoom)</td></tr>
+          <tr><td>Camera settings</td><td>Manual focus, manual exposure (ISO, shutter speed), white balance, scene modes (night, portrait …)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Only the features your device's camera supports are shown, so the options vary between devices.</p>
+
+    <h2 id="annotate">6. Drawing on photos</h2>
+    <p>Tap a photo in the note → "Draw on photo".</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tool</th><th>How to use</th></tr></thead>
+        <tbody>
+          <tr><td>Circle</td><td>Drag diagonally over the area to circle</td></tr>
+          <tr><td>Arrow</td><td>Drag from the tail to the tip</td></tr>
+          <tr><td>Rectangle</td><td>Drag diagonally</td></tr>
+          <tr><td>Pen</td><td>Draw freehand</td></tr>
+          <tr><td>Text</td><td>Tap where you want the text and type it</td></tr>
+          <tr><td>Select / move</td><td>Tap a drawing to select it, drag to move. Delete with the trash button; tap a colour to recolour it</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul>
+      <li>Choose from 6 colours (red, yellow, green, blue, white, black) and 3 widths (thin, medium, thick). Text size follows the width.</li>
+      <li>Undo and redo are in the top bar.</li>
+      <li>Tap "✓" at the top right to save. If you go back without saving, you are asked whether to discard your changes.</li>
+      <li>Open the photo again later to <strong>move or delete what you drew</strong> (the original photo is kept).</li>
+    </ul>
+
+    <h2 id="storage">7. How notes are stored, and Obsidian</h2>
+    <p>Notes are plain files, not a database. The folder is shown under Settings → Storage.</p>
+<pre><code>Android/data/space.webkombinat.oshiire/files/vault/
+  2026-10-17_124831.md          ← one file per note
+  attachments/
+    IMG_20261017_124905.jpg     ← photo (with drawings, if any)
+    IMG_20261017_124905.orig.jpg       ← original photo before drawing
+    IMG_20261017_124905.jpg.annot.json ← the drawings (for re-editing)
+  .trash/                       ← deleted notes</code></pre>
+    <p>A note looks like this:</p>
+<pre><code># Morning café
+
+Went to the café by the station.
+
+![](attachments/IMG_20261017_124905.jpg)
+
+Beautiful latte art.</code></pre>
+    <h3>Opening in Obsidian</h3>
+    <ol class="steps">
+      <li><strong>Copy the vault folder to your PC</strong>Connect the phone over USB, choose "File transfer", and copy the folder above to your PC.</li>
+      <li><strong>In Obsidian, choose "Open folder as vault"</strong>Select the copied <code>vault</code> folder. Notes appear with their photos.</li>
+    </ol>
+    <p>Markdown files you write on the PC and copy back appear in the app's list too (<code>![[file.jpg]]</code> embeds are supported).</p>
+    <div class="callout callout--warn">
+      <span class="callout__title">Uninstalling the app deletes your notes</span>
+      <p>The folder belongs to the app, so its contents are removed when you uninstall. Copy important notes to your PC.</p>
+    </div>
+
+    <h2 id="settings">8. Settings</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Theme</td><td>Follow system / Light / Dark. Applies immediately</td></tr>
+          <tr><td>Storage</td><td>Location of the notes folder (Obsidian vault)</td></tr>
+          <tr><td>About</td><td>User guide (this page), source code, version</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 id="trouble">9. Troubleshooting</h2>
+    <details>
+      <summary>The camera shows nothing, or says camera access is needed</summary>
+      <p>Tap "Allow" in the window. If you denied it before, go to the device's Settings → Apps → oshiire → Permissions → Camera.</p>
+    </details>
+    <details>
+      <summary>"The camera was disconnected"</summary>
+      <p>Another app may be using the camera. Close it, then minimize and restore the window, or reopen the note.</p>
+    </details>
+    <details>
+      <summary>The camera window covers my text</summary>
+      <p>Drag the window away or minimize it with "–". The camera button in the top bar hides it completely. There is extra space at the end of each note, so scroll down to write below the window.</p>
+    </details>
+    <details>
+      <summary>Photos come out sideways or upside down</summary>
+      <p>The photo's orientation follows how you hold the phone. Shooting with the phone lying flat can confuse it; tilt it up slightly.</p>
+    </details>
+    <details>
+      <summary>I want a deleted note back</summary>
+      <p>Right after deleting, tap "Undo" at the bottom of the list. After that, the .md file is still in the <code>.trash</code> folder; move it back into the vault folder.</p>
+    </details>
+    <details>
+      <summary>Moving to a new phone</summary>
+      <p>Copy the vault folder via a PC to the same location on the new phone.</p>
+    </details>
+
+    <p style="margin-top:24px">Still stuck? Let us know in <a href="https://github.com/bunnmei/oshiire/issues">GitHub Issues</a>.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span class="copyright">© 2026 bunnmei</span>
+      <a href="guide.html">Guide</a>
+      <a href="privacy.html">Privacy policy</a>
+      <a href="https://github.com/bunnmei/oshiire">GitHub</a>
+    </div>
+  </footer>
+</body>
+</html>
